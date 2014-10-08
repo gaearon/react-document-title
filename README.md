@@ -28,9 +28,7 @@ Assuming you use something like [react-router](https://github.com/rackt/react-ro
 ```javascript
 var App = React.createClass({
   render: function () {
-
     // Use "My Web App" if no child overrides this
-
     return (
       <DocumentTitle title='My Web App'>
         <this.props.activeRouteHandler />
@@ -41,9 +39,7 @@ var App = React.createClass({
 
 var HomePage = React.createClass({
   render: function () {
-
-    // Use "Home" when this component is mounted
-
+    // Use "Home" while this component is mounted
     return (
       <DocumentTitle title='Home'>
         <h1>Home, sweet home.</h1>
@@ -56,9 +52,7 @@ var NewArticlePage = React.createClass({
   mixins: [LinkStateMixin],
 
   render: function () {
-
-    // Update using value from state when this component is mounted
-
+    // Update using value from state while this component is mounted
     return (
       <DocumentTitle title={this.state.title || 'Untitled'}>
         <div>
