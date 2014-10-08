@@ -6,7 +6,7 @@ This component is only intended for client-side usage.
 
 ====================
 
-### Installation
+## Installation
 
 ```
 npm install --save react-document-title
@@ -14,14 +14,14 @@ npm install --save react-document-title
 
 Dependencies: React >= 0.11.0
 
-### Features
+## Features
 
 * Does not emit DOM, not even a `<noscript>`;
 * Like a normal React compoment, can use its parent's `props` and `state`;
 * Can be defined in many places throughout the application;
 * Supports arbitrary levels of nesting, so you can define app-wide and page-specific titles.
 
-### Example
+## Example
 
 Assuming you use something like [react-router](https://github.com/rackt/react-router):
 
