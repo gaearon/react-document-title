@@ -68,3 +68,34 @@ describe('DocumentTitle', function () {
     );
   });
 });
+
+describe('DocumentTitle.rewind', function () {
+  it('clears the mounted instances', function () {
+    React.renderComponentToStaticMarkup(
+      DocumentTitle({title: 'a'},
+        DocumentTitle({title: 'b'}, DocumentTitle({title: 'c'}))
+      )
+    );
+    expect(DocumentTitle.mountedInstances.length).to.be.greaterThan(0);
+    DocumentTitle.rewind();
+    expect(DocumentTitle.mountedInstances.length).to.equal(0);
+  });
+  it('returns the latest document title', function () {
+    var title = 'cheese';
+    React.renderComponentToStaticMarkup(
+      DocumentTitle({title: 'a'},
+        DocumentTitle({title: 'b'}, DocumentTitle({title: title}))
+      )
+    );
+    expect(DocumentTitle.rewind()).to.equal(title);
+  });
+  it('returns nothing if no mounted instances exist', function () {
+    React.renderComponentToStaticMarkup(
+      DocumentTitle({title: 'a'},
+        DocumentTitle({title: 'b'}, DocumentTitle({title: 'c'}))
+      )
+    );
+    DocumentTitle.rewind();
+    expect(DocumentTitle.rewind()).to.equal(undefined);
+  });
+});
