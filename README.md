@@ -19,7 +19,8 @@ Dependencies: React >= 0.11.0
 * Does not emit DOM, not even a `<noscript>`;
 * Like a normal React compoment, can use its parent's `props` and `state`;
 * Can be defined in many places throughout the application;
-* Supports arbitrary levels of nesting, so you can define app-wide and page-specific titles.
+* Supports arbitrary levels of nesting, so you can define app-wide and page-specific titles;
+* Works just as well with isomorphic apps.
 
 ## Example
 
