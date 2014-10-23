@@ -7,7 +7,8 @@
     "react": ">=0.11.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "lint": "jshint index.js test"
   },
   "repository": {
     "type": "git",
@@ -26,5 +27,12 @@
   "bugs": {
     "url": "https://github.com/gaearon/react-document-title/issues"
   },
-  "homepage": "https://github.com/gaearon/react-document-title"
+  "homepage": "https://github.com/gaearon/react-document-title",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "global": "^4.3.0",
+    "jshint": "^2.5.6",
+    "mocha": "^2.0.1",
+    "react": "^0.11.2"
+  }
 }

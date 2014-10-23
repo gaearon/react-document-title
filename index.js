@@ -74,6 +74,15 @@ var DocumentTitle = React.createClass({
   statics: {
     mountedInstances: [],
 
+    rewind: function () {
+      var activeInstance = DocumentTitle.getActiveInstance();
+      DocumentTitle.mountedInstances.splice(0);
+
+      if (activeInstance) {
+        return activeInstance.props.title;
+      }
+    },
+
     getActiveInstance: function () {
       var length = DocumentTitle.mountedInstances.length;
       if (length > 0) {
@@ -82,6 +91,9 @@ var DocumentTitle = React.createClass({
     },
 
     updateDocumentTitle: function () {
+      if (typeof document === 'undefined') {
+        return;
+      }
       var activeInstance = DocumentTitle.getActiveInstance();
       if (activeInstance) {
         document.title = activeInstance.props.title;
