@@ -5,7 +5,7 @@ var expect = require('expect.js'),
     React = require('react'),
     DocumentTitle = require('../');
 
-describe('DocumentTitle', function () {
+describe('DocumentTitle (in a browser)', function () {
   afterEach(function () {
     React.unmountComponentAtNode(global.document.body);
     delete global.document.title;
