@@ -94,6 +94,7 @@ var DocumentTitle = React.createClass({
       if (typeof document === 'undefined') {
         return;
       }
+
       var activeInstance = DocumentTitle.getActiveInstance();
       if (activeInstance) {
         document.title = activeInstance.props.title;
