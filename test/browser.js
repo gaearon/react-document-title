@@ -32,10 +32,10 @@ describe('DocumentTitle (in a browser)', function () {
         done();
       },
       render: function () {
-        return DocumentTitle({title: title});
+        return React.createElement(DocumentTitle, {title: title});
       }
     });
-    React.renderComponent(Component(), global.document.body);
+    React.render(React.createElement(Component), global.document.body);
   });
   it('supports nesting', function (done) {
     var called = false;
@@ -49,7 +49,7 @@ describe('DocumentTitle (in a browser)', function () {
         });
       },
       render: function () {
-        return DocumentTitle({title: title});
+        return React.createElement(DocumentTitle, {title: title});
       }
     });
     var Component2 = React.createClass({
@@ -57,11 +57,11 @@ describe('DocumentTitle (in a browser)', function () {
         called = true;
       },
       render: function () {
-        return DocumentTitle({title: 'nope'},
-          React.DOM.div(null, Component1())
+        return React.createElement(DocumentTitle, {title: 'nope'},
+          React.DOM.div(null, React.createElement(Component1))
         );
       }
     });
-    React.renderComponent(Component2(), global.document.body);
+    React.render(React.createElement(Component2), global.document.body);
   });
 });
