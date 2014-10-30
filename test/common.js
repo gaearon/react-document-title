@@ -6,6 +6,11 @@ var expect = require('expect.js'),
     DocumentTitle = require('../');
 
 describe('DocumentTitle', function () {
+  it('has a displayName', function () {
+    var el = React.createElement(DocumentTitle);
+    expect(el.type.displayName).to.be.a('string');
+    expect(el.type.displayName).not.to.be.empty();
+  });
   it('hides itself from the DOM', function () {
     var Component = React.createClass({
       render: function () {
