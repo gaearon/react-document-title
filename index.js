@@ -67,6 +67,8 @@ var React = require('react'),
  *     });
  */
 var DocumentTitle = React.createClass({
+  displayName: 'DocumentTitle',
+
   propTypes: {
     title: PropTypes.string
   },
