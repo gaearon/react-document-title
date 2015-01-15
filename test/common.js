@@ -81,9 +81,9 @@ describe('DocumentTitle.rewind', function () {
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
       )
     );
-    expect(DocumentTitle.mountedInstances.length).to.be.greaterThan(0);
+    expect(DocumentTitle.getMountedInstances().length).to.be.greaterThan(0);
     DocumentTitle.rewind();
-    expect(DocumentTitle.mountedInstances.length).to.equal(0);
+    expect(DocumentTitle.getMountedInstances().length).to.equal(0);
   });
   it('returns the latest document title', function () {
     var title = 'cheese';
