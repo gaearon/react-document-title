@@ -1,4 +1,4 @@
-react-document-title
+React Document Title
 ====================
 
 Provides a declarative way to specify `document.title` in a single-page app.  
