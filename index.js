@@ -1,80 +1,48 @@
 'use strict';
 
 var React = require('react'),
-    Children = require('react/addons').Children,
-    PropTypes = React.PropTypes;
+    createSideEffect = require('react-side-effect');
+
+var _serverTitle = null;
+
+function getTitleFromPropsList(propsList) {
+  var innermostProps = propsList[propsList.length - 1];
+  if (innermostProps) {
+    return innermostProps.title;
+  }
+}
+
+var SetDocumentTitle = createSideEffect(function handleChange(propsList) {
+  var title = getTitleFromPropsList(propsList);
+
+  if (typeof document !== 'undefined') {
+    document.title = title || '';
+  } else {
+    _serverTitle = title || null;
+  }
+});
 
 var DocumentTitle = React.createClass({
   displayName: 'DocumentTitle',
 
   propTypes: {
-    title: PropTypes.string
+    title: React.PropTypes.string.isRequired
   },
 
   statics: {
-    mountedInstances: [],
+    peek: function () {
+      return _serverTitle;
+    },
 
     rewind: function () {
-      var activeInstance = DocumentTitle.getActiveInstance();
-      DocumentTitle.mountedInstances.splice(0);
-
-      if (activeInstance) {
-        return activeInstance.props.title;
-      }
-    },
-
-    getActiveInstance: function () {
-      var length = DocumentTitle.mountedInstances.length;
-      if (length > 0) {
-        return DocumentTitle.mountedInstances[length - 1];
-      }
-    },
-
-    updateDocumentTitle: function () {
-      if (typeof document === 'undefined') {
-        return;
-      }
-
-      var activeInstance = DocumentTitle.getActiveInstance();
-      if (activeInstance) {
-        document.title = activeInstance.props.title;
-      }
+      var title = _serverTitle;
+      SetDocumentTitle.dispose();
+      return title;
     }
-  },
-
-  getDefaultProps: function () {
-    return {
-      title: ''
-    };
-  },
-
-  isActive: function () {
-    return this === DocumentTitle.getActiveInstance();
-  },
-
-  componentWillMount: function () {
-    DocumentTitle.mountedInstances.push(this);
-    DocumentTitle.updateDocumentTitle();
-  },
-
-  componentDidUpdate: function (prevProps) {
-    if (this.isActive() && prevProps.title !== this.props.title) {
-      DocumentTitle.updateDocumentTitle();
-    }
-  },
-
-  componentWillUnmount: function () {
-    var index = DocumentTitle.mountedInstances.indexOf(this);
-    DocumentTitle.mountedInstances.splice(index, 1);
-    DocumentTitle.updateDocumentTitle();
   },
 
   render: function () {
-    if (this.props.children) {
-      return Children.only(this.props.children);
-    } else {
-      return null;
-    }
+    return React.createElement(SetDocumentTitle, this.props);
   }
 });
 
