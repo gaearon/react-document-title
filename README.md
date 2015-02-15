@@ -4,6 +4,8 @@ React Document Title
 Provides a declarative way to specify `document.title` in a single-page app.  
 This component can be used on server side as well.
 
+Built with [React Side Effect](https://github.com/gaearon/react-side-effect).
+
 ====================
 
 ## Installation
