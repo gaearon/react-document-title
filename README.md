@@ -71,3 +71,7 @@ var NewArticlePage = React.createClass({
 If you use it on server, call `DocumentTitle.rewind()` after rendering components to string to retrieve the title given to the innermost `DocumentTitle`. You can then embed this title into HTML page template.
 
 Because this component keeps track of mounted instances, **you have to make sure to call `rewind` on server**, or you'll get a memory leak.
+
+## But What About Meta Tags?
+
+I want to keep this project simple and [after a discussion](https://github.com/gaearon/react-document-title/issues/5) decided it to be out of scope. The good news is you can implement this yourself using the same code that powers React Document Title: [React Side Effect](https://github.com/gaearon/react-side-effect). If figure out a good API for setting `<meta>`, `<link rel='canonical'>` and similar tags in a nested fashion and use React Side Effect for that, please let me know, so I can link to your project!
