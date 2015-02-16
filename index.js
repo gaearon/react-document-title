@@ -12,7 +12,7 @@ function getTitleFromPropsList(propsList) {
   }
 }
 
-var SetDocumentTitle = createSideEffect(function handleChange(propsList) {
+var DocumentTitle = createSideEffect(function handleChange(propsList) {
   var title = getTitleFromPropsList(propsList);
 
   if (typeof document !== 'undefined') {
@@ -20,9 +20,7 @@ var SetDocumentTitle = createSideEffect(function handleChange(propsList) {
   } else {
     _serverTitle = title || null;
   }
-});
-
-var DocumentTitle = React.createClass({
+}, {
   displayName: 'DocumentTitle',
 
   propTypes: {
@@ -36,13 +34,9 @@ var DocumentTitle = React.createClass({
 
     rewind: function () {
       var title = _serverTitle;
-      SetDocumentTitle.dispose();
+      this.dispose();
       return title;
     }
-  },
-
-  render: function () {
-    return React.createElement(SetDocumentTitle, this.props);
   }
 });
 
