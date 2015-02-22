@@ -1,6 +1,6 @@
 {
   "name": "react-document-title",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A declarative, nested, stateful document.title for React",
   "main": "index.js",
   "peerDependencies": {
