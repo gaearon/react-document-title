@@ -36,6 +36,6 @@
     "react": "^0.13.0-beta.1"
   },
   "dependencies": {
-    "react-side-effect": "~0.2.0"
+    "react-side-effect": "~0.3.0"
   }
 }
