@@ -70,7 +70,7 @@ var NewArticlePage = React.createClass({
 
 ## Server Usage
 
-If you use it on server, call `DocumentTitle.rewind()` after rendering components to string to retrieve the title given to the innermost `DocumentTitle`. You can then embed this title into HTML page template.
+If you use it on server, call `DocumentTitle.rewind()` **after rendering components to string** to retrieve the title given to the innermost `DocumentTitle`. You can then embed this title into HTML page template.
 
 Because this component keeps track of mounted instances, **you have to make sure to call `rewind` on server**, or you'll get a memory leak.
 
