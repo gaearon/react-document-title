@@ -1,0 +1,23 @@
+{
+  "name": "react-document-title",
+  "main": "index.js",
+  "version": "1.0.2",
+  "homepage": "https://github.com/gaearon/react-document-title",
+  "authors": [
+    "Dan Abramov <dan.abramov@me.com>"
+  ],
+  "description": "Provides a declarative way to specify document.title in a single-page app. This component can be used on server side as well.",
+  "keywords": [
+    "react",
+    "document",
+    "title"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
