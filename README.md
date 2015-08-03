@@ -76,4 +76,4 @@ Because this component keeps track of mounted instances, **you have to make sure
 
 ## But What About Meta Tags?
 
-I want to keep this project simple and [after a discussion](https://github.com/gaearon/react-document-title/issues/5) decided it to be out of scope. The good news is you can implement this yourself using the same code that powers React Document Title: [React Side Effect](https://github.com/gaearon/react-side-effect). If you figure out a good API for setting `<meta>`, `<link rel='canonical'>` and similar tags in a nested fashion and use React Side Effect for that, please let me know, and I'll link your project here!
+Looking for something more powerful? Check out [React Helmet](https://github.com/nfl/react-helmet)!
