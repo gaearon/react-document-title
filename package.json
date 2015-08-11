@@ -3,9 +3,6 @@
   "version": "1.0.2",
   "description": "A declarative, nested, stateful document.title for React",
   "main": "index.js",
-  "peerDependencies": {
-    "react": ">=0.11.0 || >=0.13.0-beta.1"
-  },
   "scripts": {
     "test": "mocha",
     "lint": "jshint index.js test"
