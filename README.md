@@ -14,7 +14,7 @@ Built with [React Side Effect](https://github.com/gaearon/react-side-effect).
 npm install --save react-document-title
 ```
 
-Dependencies: React >= 0.11.0
+Dependencies: React >= 0.13.0
 
 ## Features
 
