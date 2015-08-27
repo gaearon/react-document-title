@@ -18,6 +18,7 @@ describe('DocumentTitle (in a browser)', function () {
     global.window.location = {};
     global.window.navigator = {userAgent: 'Chrome'};
     console.debug = console.log;
+    DocumentTitle.canUseDOM = true;
   });
   after(function () {
     delete global.window;

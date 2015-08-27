@@ -6,6 +6,10 @@ var expect = require('expect.js'),
     DocumentTitle = require('../');
 
 describe('DocumentTitle', function () {
+  before(function () {
+    DocumentTitle.canUseDOM = false;
+  });
+
   it('has a displayName', function () {
     var el = React.createElement(DocumentTitle);
     expect(el.type.displayName).to.be.a('string');
@@ -83,7 +87,7 @@ describe('DocumentTitle.rewind', function () {
     );
     expect(DocumentTitle.peek()).to.equal('c');
     DocumentTitle.rewind();
-    expect(DocumentTitle.peek()).to.equal(null);
+    expect(DocumentTitle.peek()).to.equal(undefined);
   });
   it('returns the latest document title', function () {
     var title = 'cheese';
@@ -94,13 +98,13 @@ describe('DocumentTitle.rewind', function () {
     );
     expect(DocumentTitle.rewind()).to.equal(title);
   });
-  it('returns nothing if no mounted instances exist', function () {
+  it('returns undefined if no mounted instances exist', function () {
     React.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
       )
     );
     DocumentTitle.rewind();
-    expect(DocumentTitle.peek()).to.equal(null);
+    expect(DocumentTitle.peek()).to.equal(undefined);
   });
 });

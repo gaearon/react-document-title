@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
+    "test:watch": "npm run test -- --watch",
     "lint": "jshint index.js test"
   },
   "repository": {
@@ -33,6 +34,6 @@
     "react": "^0.13.0"
   },
   "dependencies": {
-    "react-side-effect": "^0.3.2"
+    "react-side-effect": "^1.0.0"
   }
 }
