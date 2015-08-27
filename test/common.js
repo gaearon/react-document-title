@@ -1,5 +1,5 @@
 /*jshint newcap: false */
-/*global describe, it */
+/*global describe, it, before */
 'use strict';
 var expect = require('expect.js'),
     React = require('react'),
