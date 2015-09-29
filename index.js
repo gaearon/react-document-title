@@ -15,6 +15,8 @@ function handleStateChangeOnClient(title) {
 }
 
 var DocumentTitle = React.createClass({
+  displayName: 'DocumentTitle',
+
   propTypes: {
     title: React.PropTypes.string.isRequired
   },

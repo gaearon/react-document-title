@@ -14,6 +14,7 @@ describe('DocumentTitle', function () {
     var el = React.createElement(DocumentTitle);
     expect(el.type.displayName).to.be.a('string');
     expect(el.type.displayName).not.to.be.empty();
+    expect(el.type.displayName).to.equal('SideEffect(DocumentTitle)');
   });
   it('hides itself from the DOM', function () {
     var Component = React.createClass({
