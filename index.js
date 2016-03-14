@@ -1,12 +1,13 @@
 'use strict';
 
 var React = require('react'),
-    withSideEffect = require('react-side-effect');
+    withSideEffect = require('react-side-effect'),
+    findLast = require('lodash.findlast');
 
 function reducePropsToState(propsList) {
-  var innermostProps = propsList[propsList.length - 1];
-  if (innermostProps) {
-    return innermostProps.title;
+  var lastValid = findLast(propsList, 'title');
+  if (lastValid) {
+    return lastValid.title;
   }
 }
 
