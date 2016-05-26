@@ -11,7 +11,9 @@ function reducePropsToState(propsList) {
 }
 
 function handleStateChangeOnClient(title) {
-  document.title = title || '';
+  if (title !== document.title) {
+    document.title = title || '';
+  }
 }
 
 var DocumentTitle = React.createClass({
