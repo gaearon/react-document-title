@@ -34,6 +34,7 @@
     "react": "^0.13.0"
   },
   "dependencies": {
+    "lodash.findlast": "^4.2.0",
     "react-side-effect": "^1.0.2"
   }
 }

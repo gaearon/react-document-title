@@ -99,6 +99,16 @@ describe('DocumentTitle.rewind', function () {
     );
     expect(DocumentTitle.rewind()).to.equal(title);
   });
+  it('returns the last valid document title', function() {
+    var validTitle = 'cheese';
+    var invalidTitle = '';
+    React.renderToStaticMarkup(
+      React.createElement(DocumentTitle, {title: validTitle},
+        React.createElement(DocumentTitle, {title: invalidTitle})
+      )
+    );
+    expect(DocumentTitle.rewind()).to.equal(validTitle);
+  });
   it('returns undefined if no mounted instances exist', function () {
     React.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
