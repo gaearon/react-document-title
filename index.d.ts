@@ -3,4 +3,4 @@ interface IDocumentTitleProps {
   title: string;
 }
 declare class DocumentTitle extends Component<IDocumentTitleProps, void> {}
-export default DocumentTitle;
+export = DocumentTitle;
