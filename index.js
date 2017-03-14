@@ -1,13 +1,10 @@
 'use strict';
 
-var React = require('react'),
-    withSideEffect = require('react-side-effect');
+var React = require('react');
+var withSideEffect = require('react-side-effect');
 
 function reducePropsToState(propsList) {
-  var innermostProps = propsList[propsList.length - 1];
-  if (innermostProps) {
-    return innermostProps.title;
-  }
+  return DocumentTitle.join(propsList.map(e => e.title));
 }
 
 function handleStateChangeOnClient(title) {
@@ -17,7 +14,7 @@ function handleStateChangeOnClient(title) {
   }
 }
 
-var DocumentTitle = React.createClass({
+var DocumentTitleBase = React.createClass({
   displayName: 'DocumentTitle',
 
   propTypes: {
@@ -33,7 +30,11 @@ var DocumentTitle = React.createClass({
   }
 });
 
-module.exports = withSideEffect(
+var DocumentTitle = module.exports = withSideEffect(
   reducePropsToState,
   handleStateChangeOnClient
-)(DocumentTitle);
+)(DocumentTitleBase);
+
+DocumentTitle.join = function (tokens) {
+  return tokens.pop();
+};

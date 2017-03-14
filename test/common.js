@@ -10,6 +10,10 @@ describe('DocumentTitle', function () {
     DocumentTitle.canUseDOM = false;
   });
 
+  after(function () {
+    DocumentTitle.rewind();
+  });
+
   it('has a displayName', function () {
     var el = React.createElement(DocumentTitle);
     expect(el.type.displayName).to.be.a('string');
@@ -79,33 +83,32 @@ describe('DocumentTitle', function () {
   });
 });
 
-describe('DocumentTitle.rewind', function () {
-  it('clears the mounted instances', function () {
-    React.renderToStaticMarkup(
-      React.createElement(DocumentTitle, {title: 'a'},
-        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
-      )
-    );
-    expect(DocumentTitle.peek()).to.equal('c');
-    DocumentTitle.rewind();
-    expect(DocumentTitle.peek()).to.equal(undefined);
+describe('DocumentTitle.join', function () { // tested via DocumentTitle.rewind
+  var origJoin = DocumentTitle.join;
+  afterEach(function () {
+    DocumentTitle.join = origJoin;
   });
-  it('returns the latest document title', function () {
+
+  it('returns the last document title by default', function () {
     var title = 'cheese';
     React.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )
     );
-    expect(DocumentTitle.rewind()).to.equal(title);
+    expect(DocumentTitle.rewind()).to.equal('cheese');
   });
-  it('returns undefined if no mounted instances exist', function () {
+
+  it('can be overriden for custom behavior, using all the tokens', function () {
+    var title = 'cheese';
+    DocumentTitle.join = function (tokens) {
+      return tokens.join(' | ');
+    };
     React.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
-        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
+        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )
     );
-    DocumentTitle.rewind();
-    expect(DocumentTitle.peek()).to.equal(undefined);
+    expect(DocumentTitle.rewind()).to.equal('a | b | cheese');
   });
 });

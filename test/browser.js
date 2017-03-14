@@ -6,10 +6,6 @@ var expect = require('expect.js'),
     DocumentTitle = require('../');
 
 describe('DocumentTitle (in a browser)', function () {
-  afterEach(function () {
-    React.unmountComponentAtNode(global.document.body);
-    delete global.document.title;
-  });
   before(function () {
     // Prepare the globals React expects in a browser
     global.window = require('global/window');
@@ -18,13 +14,23 @@ describe('DocumentTitle (in a browser)', function () {
     global.window.location = {};
     global.window.navigator = {userAgent: 'Chrome'};
     console.debug = console.log;
-    DocumentTitle.canUseDOM = true;
   });
   after(function () {
     delete global.window;
     delete global.document;
     delete console.debug;
   });
+
+  beforeEach(function () {
+    DocumentTitle.canUseDOM = true;
+  });
+  afterEach(function () {
+    React.unmountComponentAtNode(global.document.body);
+    delete global.document.title;
+    DocumentTitle.canUseDOM = false;
+    DocumentTitle.rewind();
+  });
+
   it('changes the document title on mount', function (done) {
     var title = 'hello world';
     var Component = React.createClass({
