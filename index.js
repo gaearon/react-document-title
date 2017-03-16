@@ -4,7 +4,7 @@ var React = require('react');
 var withSideEffect = require('react-side-effect');
 
 function reducePropsToState(propsList) {
-  return DocumentTitle.join(propsList.map(e => e.title));
+  return DocumentTitle.join(propsList.map(function (e) { return e.title; }));
 }
 
 function handleStateChangeOnClient(title) {
