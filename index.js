@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react'),
+    PropTypes = require('prop-types'),
     withSideEffect = require('react-side-effect');
 
 function reducePropsToState(propsList) {
@@ -17,13 +18,12 @@ function handleStateChangeOnClient(title) {
   }
 }
 
-var DocumentTitle = React.createClass({
-  displayName: 'DocumentTitle',
+function DocumentTitle() {
+  React.Component.call(this);
+}
 
-  propTypes: {
-    title: React.PropTypes.string.isRequired
-  },
-
+DocumentTitle.prototype = Object.assign(Object.create(React.Component.prototype), {
+  constructor: DocumentTitle,
   render: function render() {
     if (this.props.children) {
       return React.Children.only(this.props.children);
@@ -32,6 +32,10 @@ var DocumentTitle = React.createClass({
     }
   }
 });
+
+DocumentTitle.propTypes = {
+  title: PropTypes.string.isRequired
+};
 
 module.exports = withSideEffect(
   reducePropsToState,
