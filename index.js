@@ -20,6 +20,7 @@ function handleStateChangeOnClient(title) {
 
 function DocumentTitle() {
   React.Component.call(this);
+  this.displayName = 'DocumentTitle';
 }
 
 DocumentTitle.prototype = Object.assign(Object.create(React.Component.prototype), {
