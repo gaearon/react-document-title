@@ -34,7 +34,6 @@
     "react": "^0.13.0"
   },
   "dependencies": {
-    "create-react-class": "^15.5.1",
     "prop-types": "^15.5.6",
     "react-side-effect": "^1.0.2"
   }
