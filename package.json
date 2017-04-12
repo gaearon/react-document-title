@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/gaearon/react-document-title",
   "devDependencies": {
+    "create-react-class": "^15.5.2",
     "expect.js": "^0.3.1",
     "global": "^4.3.0",
     "jshint": "^2.5.6",
