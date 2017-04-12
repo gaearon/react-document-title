@@ -1,30 +1,27 @@
 /*jshint newcap: false */
 /*global global, describe, it, afterEach, before, after */
 'use strict';
+
 var expect = require('expect.js'),
+    jsdom = require('mocha-jsdom'),
     React = require('react'),
+    ReactDOM = require('react-dom'),
     createReactClass = require('create-react-class'),
     DocumentTitle = require('../');
 
+jsdom();
+
 describe('DocumentTitle (in a browser)', function () {
+  var container;
+  beforeEach(function() {
+    container = document.createElement('div');
+  });
   afterEach(function () {
-    React.unmountComponentAtNode(global.document.body);
+    ReactDOM.unmountComponentAtNode(container);
     delete global.document.title;
   });
   before(function () {
-    // Prepare the globals React expects in a browser
-    global.window = require('global/window');
-    global.document = require('global/document');
-    global.window.document = document;
-    global.window.location = {};
-    global.window.navigator = {userAgent: 'Chrome'};
-    console.debug = console.log;
     DocumentTitle.canUseDOM = true;
-  });
-  after(function () {
-    delete global.window;
-    delete global.document;
-    delete console.debug;
   });
   it('changes the document title on mount', function (done) {
     var title = 'hello world';
@@ -37,7 +34,7 @@ describe('DocumentTitle (in a browser)', function () {
         return React.createElement(DocumentTitle, {title: title});
       }
     });
-    React.render(React.createElement(Component), global.document.body);
+    ReactDOM.render(React.createElement(Component), container);
   });
   it('supports nesting', function (done) {
     var called = false;
@@ -64,6 +61,6 @@ describe('DocumentTitle (in a browser)', function () {
         );
       }
     });
-    React.render(React.createElement(Component2), global.document.body);
+    ReactDOM.render(React.createElement(Component2), container);
   });
 });

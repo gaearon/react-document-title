@@ -3,6 +3,7 @@
 'use strict';
 var expect = require('expect.js'),
     React = require('react'),
+    ReactDOMServer = require('react-dom/server'),
     createReactClass = require('create-react-class'),
     DocumentTitle = require('../');
 
@@ -25,7 +26,7 @@ describe('DocumentTitle', function () {
         );
       }
     });
-    var markup = React.renderToStaticMarkup(React.createElement(Component));
+    var markup = ReactDOMServer.renderToStaticMarkup(React.createElement(Component));
     expect(markup).to.equal('<div>hello</div>');
   });
   it('throws an error if it has multiple children', function (done) {
@@ -38,9 +39,9 @@ describe('DocumentTitle', function () {
       }
     });
     expect(function () {
-      React.renderToStaticMarkup(React.createElement(Component));
+      ReactDOMServer.renderToStaticMarkup(React.createElement(Component));
     }).to.throwException(function (e) {
-      expect(e.message).to.match(/^Invariant Violation:/);
+      expect(e.message).to.match(/React.Children.only expected/);
       done();
     });
   });
@@ -64,7 +65,7 @@ describe('DocumentTitle', function () {
         );
       }
     });
-    var markup = React.renderToStaticMarkup(React.createElement(Component2));
+    var markup = ReactDOMServer.renderToStaticMarkup(React.createElement(Component2));
     expect(markup).to.equal(
       '<div>' +
         '<div>a</div>' +
@@ -82,7 +83,7 @@ describe('DocumentTitle', function () {
 
 describe('DocumentTitle.rewind', function () {
   it('clears the mounted instances', function () {
-    React.renderToStaticMarkup(
+    ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
       )
@@ -93,7 +94,7 @@ describe('DocumentTitle.rewind', function () {
   });
   it('returns the latest document title', function () {
     var title = 'cheese';
-    React.renderToStaticMarkup(
+    ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )
@@ -101,7 +102,7 @@ describe('DocumentTitle.rewind', function () {
     expect(DocumentTitle.rewind()).to.equal(title);
   });
   it('returns undefined if no mounted instances exist', function () {
-    React.renderToStaticMarkup(
+    ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
       )
