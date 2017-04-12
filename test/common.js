@@ -3,6 +3,7 @@
 'use strict';
 var expect = require('expect.js'),
     React = require('react'),
+    createReactClass = require('create-react-class'),
     DocumentTitle = require('../');
 
 describe('DocumentTitle', function () {
@@ -17,7 +18,7 @@ describe('DocumentTitle', function () {
     expect(el.type.displayName).to.equal('SideEffect(DocumentTitle)');
   });
   it('hides itself from the DOM', function () {
-    var Component = React.createClass({
+    var Component = createReactClass({
       render: function () {
         return React.createElement(DocumentTitle, {title: 'irrelevant'},
           React.createElement('div', null, 'hello')
@@ -28,7 +29,7 @@ describe('DocumentTitle', function () {
     expect(markup).to.equal('<div>hello</div>');
   });
   it('throws an error if it has multiple children', function (done) {
-    var Component = React.createClass({
+    var Component = createReactClass({
       render: function () {
         return React.createElement(DocumentTitle, {title: 'irrelevant'},
           React.createElement('div', null, 'hello'),
@@ -44,7 +45,7 @@ describe('DocumentTitle', function () {
     });
   });
   it('works with complex children', function () {
-    var Component1 = React.createClass({
+    var Component1 = createReactClass({
       render: function() {
         return React.createElement('p', null,
           React.createElement('span', null, 'c'),
@@ -52,7 +53,7 @@ describe('DocumentTitle', function () {
         );
       }
     });
-    var Component2 = React.createClass({
+    var Component2 = createReactClass({
       render: function () {
         return React.createElement(DocumentTitle, {title: 'irrelevant'},
           React.createElement('div', null,
