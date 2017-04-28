@@ -1,5 +1,5 @@
 /*jshint newcap: false */
-/*global global, describe, it, afterEach, before, after */
+/*global global, describe, it, afterEach, before, beforeEach, after */
 'use strict';
 
 var expect = require('expect.js'),
@@ -62,5 +62,34 @@ describe('DocumentTitle (in a browser)', function () {
       }
     });
     ReactDOM.render(React.createElement(Component2), container);
+  });
+  it('falsy nested value returns top-level default', function (done) {
+    var called = false;
+    var title = 'hello world';
+    var NestedWithNoTitle = createReactClass({
+      componentDidMount: function () {
+        called = true;
+      },
+      
+      render: function () {
+        return React.createElement(DocumentTitle, {title: null});
+      }
+    });
+    var Root = createReactClass({
+      componentDidMount: function () {
+        setTimeout(function () {
+          expect(called).to.be(true);
+          expect(global.document.title).to.equal(title);
+          done();
+        });
+      },
+      
+      render: function () {
+        return React.createElement(DocumentTitle, {title: title},
+          React.DOM.div(null, React.createElement(NestedWithNoTitle))
+        );
+      }
+    });
+    ReactDOM.render(React.createElement(Root), container);
   });
 });

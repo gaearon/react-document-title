@@ -12,9 +12,8 @@ function reducePropsToState(propsList) {
 }
 
 function handleStateChangeOnClient(title) {
-  var nextTitle = title || '';
-  if (nextTitle !== document.title) {
-    document.title = nextTitle;
+  if (title && title !== document.title) {
+    document.title = title;
   }
 }
 
