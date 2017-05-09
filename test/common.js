@@ -1,9 +1,11 @@
 /*jshint newcap: false */
 /*global describe, it, before */
 'use strict';
-var expect = require('expect.js'),
-    React = require('react'),
-    DocumentTitle = require('../');
+var expect = require('expect.js');
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+var createReactClass = require('create-react-class');
+var DocumentTitle = require('../');
 
 describe('DocumentTitle', function () {
   before(function () {
@@ -21,18 +23,18 @@ describe('DocumentTitle', function () {
     expect(el.type.displayName).to.equal('SideEffect(DocumentTitle)');
   });
   it('hides itself from the DOM', function () {
-    var Component = React.createClass({
+    var Component = createReactClass({
       render: function () {
         return React.createElement(DocumentTitle, {title: 'irrelevant'},
           React.createElement('div', null, 'hello')
         );
       }
     });
-    var markup = React.renderToStaticMarkup(React.createElement(Component));
+    var markup = ReactDOMServer.renderToStaticMarkup(React.createElement(Component));
     expect(markup).to.equal('<div>hello</div>');
   });
   it('throws an error if it has multiple children', function (done) {
-    var Component = React.createClass({
+    var Component = createReactClass({
       render: function () {
         return React.createElement(DocumentTitle, {title: 'irrelevant'},
           React.createElement('div', null, 'hello'),
@@ -41,14 +43,14 @@ describe('DocumentTitle', function () {
       }
     });
     expect(function () {
-      React.renderToStaticMarkup(React.createElement(Component));
+      ReactDOMServer.renderToStaticMarkup(React.createElement(Component));
     }).to.throwException(function (e) {
-      expect(e.message).to.match(/^Invariant Violation:/);
+      expect(e.message).to.match(/React.Children.only expected/);
       done();
     });
   });
   it('works with complex children', function () {
-    var Component1 = React.createClass({
+    var Component1 = createReactClass({
       render: function() {
         return React.createElement('p', null,
           React.createElement('span', null, 'c'),
@@ -56,7 +58,7 @@ describe('DocumentTitle', function () {
         );
       }
     });
-    var Component2 = React.createClass({
+    var Component2 = createReactClass({
       render: function () {
         return React.createElement(DocumentTitle, {title: 'irrelevant'},
           React.createElement('div', null,
@@ -67,7 +69,7 @@ describe('DocumentTitle', function () {
         );
       }
     });
-    var markup = React.renderToStaticMarkup(React.createElement(Component2));
+    var markup = ReactDOMServer.renderToStaticMarkup(React.createElement(Component2));
     expect(markup).to.equal(
       '<div>' +
         '<div>a</div>' +
@@ -91,7 +93,7 @@ describe('DocumentTitle.join', function () { // tested via DocumentTitle.rewind
 
   it('returns the last document title by default', function () {
     var title = 'cheese';
-    React.renderToStaticMarkup(
+    ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )
@@ -104,7 +106,7 @@ describe('DocumentTitle.join', function () { // tested via DocumentTitle.rewind
     DocumentTitle.join = function (tokens) {
       return tokens.join(' | ');
     };
-    React.renderToStaticMarkup(
+    ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )

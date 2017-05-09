@@ -1,31 +1,25 @@
 /*jshint newcap: false */
 /*global global, describe, it, afterEach, before, after */
 'use strict';
-var expect = require('expect.js'),
-    React = require('react'),
-    DocumentTitle = require('../');
+
+var expect = require('expect.js');
+var jsdom = require('mocha-jsdom');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
+var DocumentTitle = require('../');
+
+jsdom();
 
 describe('DocumentTitle (in a browser)', function () {
-  before(function () {
-    // Prepare the globals React expects in a browser
-    global.window = require('global/window');
-    global.document = require('global/document');
-    global.window.document = document;
-    global.window.location = {};
-    global.window.navigator = {userAgent: 'Chrome'};
-    console.debug = console.log;
-  });
-  after(function () {
-    delete global.window;
-    delete global.document;
-    delete console.debug;
-  });
 
+  var container;
   beforeEach(function () {
+    container = document.createElement('div');
     DocumentTitle.canUseDOM = true;
   });
   afterEach(function () {
-    React.unmountComponentAtNode(global.document.body);
+    ReactDOM.unmountComponentAtNode(container);
     delete global.document.title;
     DocumentTitle.canUseDOM = false;
     DocumentTitle.rewind();
@@ -33,7 +27,7 @@ describe('DocumentTitle (in a browser)', function () {
 
   it('changes the document title on mount', function (done) {
     var title = 'hello world';
-    var Component = React.createClass({
+    var Component = createReactClass({
       componentDidMount: function () {
         expect(global.document.title).to.equal(title);
         done();
@@ -42,12 +36,12 @@ describe('DocumentTitle (in a browser)', function () {
         return React.createElement(DocumentTitle, {title: title});
       }
     });
-    React.render(React.createElement(Component), global.document.body);
+    ReactDOM.render(React.createElement(Component), container);
   });
   it('supports nesting', function (done) {
     var called = false;
     var title = 'hello world';
-    var Component1 = React.createClass({
+    var Component1 = createReactClass({
       componentDidMount: function () {
         setTimeout(function () {
           expect(called).to.be(true);
@@ -59,7 +53,7 @@ describe('DocumentTitle (in a browser)', function () {
         return React.createElement(DocumentTitle, {title: title});
       }
     });
-    var Component2 = React.createClass({
+    var Component2 = createReactClass({
       componentDidMount: function () {
         called = true;
       },
@@ -69,6 +63,6 @@ describe('DocumentTitle (in a browser)', function () {
         );
       }
     });
-    React.render(React.createElement(Component2), global.document.body);
+    ReactDOM.render(React.createElement(Component2), container);
   });
 });
