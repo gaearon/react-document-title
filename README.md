@@ -6,6 +6,8 @@ This component can be used on server side as well.
 
 Built with [React Side Effect](https://github.com/gaearon/react-side-effect).
 
+**IMPORTANT NOTE ON SERVER RENDERING:** Please read [this](#server-usage) to prevent creating a memory leak.
+
 ====================
 
 ## Installation
