@@ -6,8 +6,6 @@ This component can be used on server side as well.
 
 Built with [React Side Effect](https://github.com/gaearon/react-side-effect).
 
-====================
-
 ## Installation
 
 ```
@@ -29,43 +27,45 @@ Dependencies: React >= 0.13.0
 Assuming you use something like [react-router](https://github.com/rackt/react-router):
 
 ```javascript
-var App = React.createClass({
-  render: function () {
-    // Use "My Web App" if no child overrides this
-    return (
-      <DocumentTitle title='My Web App'>
-        <this.props.activeRouteHandler />
-      </DocumentTitle>
-    );
+function App() {
+  // Use "My Web App" if no child overrides this
+  return (
+    <DocumentTitle title='My Web App'>
+      <SomeRouter />
+    </DocumentTitle>
+  );
+}
+
+function HomePage() {
+  // Use "Home" while this component is mounted
+  return (
+    <DocumentTitle title='Home'>
+      <h1>Home, sweet home.</h1>
+    </DocumentTitle>
+  );
+}
+
+class NewArticlePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { title: 'Untitled' };
   }
-});
 
-var HomePage = React.createClass({
-  render: function () {
-    // Use "Home" while this component is mounted
-    return (
-      <DocumentTitle title='Home'>
-        <h1>Home, sweet home.</h1>
-      </DocumentTitle>
-    );
-  }
-});
-
-var NewArticlePage = React.createClass({
-  mixins: [LinkStateMixin],
-
-  render: function () {
+  render() {
     // Update using value from state while this component is mounted
     return (
-      <DocumentTitle title={this.state.title || 'Untitled'}>
+      <DocumentTitle title={this.state.title}>
         <div>
           <h1>New Article</h1>
-          <input valueLink={this.linkState('title')} />
+          <input
+            value={this.state.title}
+            onChange={(e) => this.setState({ title: e.target.value })}
+          />
         </div>
       </DocumentTitle>
     );
   }
-});
+}
 ```
 
 ## Server Usage
