@@ -14,6 +14,7 @@ function reducePropsToState(propsList) {
 function handleStateChangeOnClient(title) {
   var nextTitle = title || '';
   if (nextTitle !== document.title) {
+    history.replaceState(null, '');
     document.title = nextTitle;
   }
 }
