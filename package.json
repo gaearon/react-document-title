@@ -3,6 +3,7 @@
   "version": "2.0.3",
   "description": "A declarative, nested, stateful document.title for React",
   "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "test": "mocha",
     "test:watch": "npm run test -- --watch",
