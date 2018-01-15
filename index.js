@@ -1,14 +1,11 @@
 'use strict';
 
-var React = require('react'),
-    PropTypes = require('prop-types'),
-    withSideEffect = require('react-side-effect');
+var React = require('react');
+var PropTypes = require('prop-types');
+var withSideEffect = require('react-side-effect');
 
 function reducePropsToState(propsList) {
-  var innermostProps = propsList[propsList.length - 1];
-  if (innermostProps) {
-    return innermostProps.title;
-  }
+  return DocumentTitle.join(propsList.map(function (e) { return e.title; }));
 }
 
 function handleStateChangeOnClient(title) {
@@ -18,15 +15,15 @@ function handleStateChangeOnClient(title) {
   }
 }
 
-function DocumentTitle() {}
-DocumentTitle.prototype = Object.create(React.Component.prototype);
+function DocumentTitleBase() {}
+DocumentTitleBase.prototype = Object.create(React.Component.prototype);
 
-DocumentTitle.displayName = 'DocumentTitle';
-DocumentTitle.propTypes = {
+DocumentTitleBase.displayName = 'DocumentTitle';
+DocumentTitleBase.propTypes = {
   title: PropTypes.string.isRequired
 };
 
-DocumentTitle.prototype.render = function() {
+DocumentTitleBase.prototype.render = function() {
   if (this.props.children) {
     return React.Children.only(this.props.children);
   } else {
@@ -34,7 +31,11 @@ DocumentTitle.prototype.render = function() {
   }
 };
 
-module.exports = withSideEffect(
+var DocumentTitle = module.exports = withSideEffect(
   reducePropsToState,
   handleStateChangeOnClient
-)(DocumentTitle);
+)(DocumentTitleBase);
+
+DocumentTitle.join = function (tokens) {
+  return tokens.pop();
+};

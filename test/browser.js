@@ -2,27 +2,29 @@
 /*global global, describe, it, afterEach, before, after */
 'use strict';
 
-var expect = require('expect.js'),
-    jsdom = require('mocha-jsdom'),
-    React = require('react'),
-    ReactDOM = require('react-dom'),
-    createReactClass = require('create-react-class'),
-    DocumentTitle = require('../');
+var expect = require('expect.js');
+var jsdom = require('mocha-jsdom');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var createReactClass = require('create-react-class');
+var DocumentTitle = require('../');
 
 jsdom();
 
 describe('DocumentTitle (in a browser)', function () {
+
   var container;
-  beforeEach(function() {
+  beforeEach(function () {
     container = document.createElement('div');
+    DocumentTitle.canUseDOM = true;
   });
   afterEach(function () {
     ReactDOM.unmountComponentAtNode(container);
     delete global.document.title;
+    DocumentTitle.canUseDOM = false;
+    DocumentTitle.rewind();
   });
-  before(function () {
-    DocumentTitle.canUseDOM = true;
-  });
+
   it('changes the document title on mount', function (done) {
     var title = 'hello world';
     var Component = createReactClass({

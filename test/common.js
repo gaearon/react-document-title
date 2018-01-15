@@ -1,15 +1,19 @@
 /*jshint newcap: false */
 /*global describe, it, before */
 'use strict';
-var expect = require('expect.js'),
-    React = require('react'),
-    ReactDOMServer = require('react-dom/server'),
-    createReactClass = require('create-react-class'),
-    DocumentTitle = require('../');
+var expect = require('expect.js');
+var React = require('react');
+var ReactDOMServer = require('react-dom/server');
+var createReactClass = require('create-react-class');
+var DocumentTitle = require('../');
 
 describe('DocumentTitle', function () {
   before(function () {
     DocumentTitle.canUseDOM = false;
+  });
+
+  after(function () {
+    DocumentTitle.rewind();
   });
 
   it('has a displayName', function () {
@@ -81,33 +85,32 @@ describe('DocumentTitle', function () {
   });
 });
 
-describe('DocumentTitle.rewind', function () {
-  it('clears the mounted instances', function () {
-    ReactDOMServer.renderToStaticMarkup(
-      React.createElement(DocumentTitle, {title: 'a'},
-        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
-      )
-    );
-    expect(DocumentTitle.peek()).to.equal('c');
-    DocumentTitle.rewind();
-    expect(DocumentTitle.peek()).to.equal(undefined);
+describe('DocumentTitle.join', function () { // tested via DocumentTitle.rewind
+  var origJoin = DocumentTitle.join;
+  afterEach(function () {
+    DocumentTitle.join = origJoin;
   });
-  it('returns the latest document title', function () {
+
+  it('returns the last document title by default', function () {
     var title = 'cheese';
     ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
         React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )
     );
-    expect(DocumentTitle.rewind()).to.equal(title);
+    expect(DocumentTitle.rewind()).to.equal('cheese');
   });
-  it('returns undefined if no mounted instances exist', function () {
+
+  it('can be overriden for custom behavior, using all the tokens', function () {
+    var title = 'cheese';
+    DocumentTitle.join = function (tokens) {
+      return tokens.join(' | ');
+    };
     ReactDOMServer.renderToStaticMarkup(
       React.createElement(DocumentTitle, {title: 'a'},
-        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
+        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
       )
     );
-    DocumentTitle.rewind();
-    expect(DocumentTitle.peek()).to.equal(undefined);
+    expect(DocumentTitle.rewind()).to.equal('a | b | cheese');
   });
 });
