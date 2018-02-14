@@ -18,20 +18,13 @@ function handleStateChangeOnClient(title) {
   }
 }
 
-function DocumentTitle() {}
-DocumentTitle.prototype = Object.create(React.Component.prototype);
+function DocumentTitle(props) {
+    return props.children || null;
+}
 
 DocumentTitle.displayName = 'DocumentTitle';
 DocumentTitle.propTypes = {
   title: PropTypes.string.isRequired
-};
-
-DocumentTitle.prototype.render = function() {
-  if (this.props.children) {
-    return React.Children.only(this.props.children);
-  } else {
-    return null;
-  }
 };
 
 module.exports = withSideEffect(
