@@ -27,6 +27,8 @@ Dependencies: React >= 0.13.0
 Assuming you use something like [react-router](https://github.com/rackt/react-router):
 
 ```javascript
+import DocumentTitle from 'react-document-title'
+
 function App() {
   // Use "My Web App" if no child overrides this
   return (
