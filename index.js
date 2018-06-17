@@ -22,9 +22,11 @@ function DocumentTitle() {}
 DocumentTitle.prototype = Object.create(React.Component.prototype);
 
 DocumentTitle.displayName = 'DocumentTitle';
-DocumentTitle.propTypes = {
-  title: PropTypes.string.isRequired
-};
+if (process.env.NODE_ENV !== 'production') {
+  DocumentTitle.propTypes = {
+    title: PropTypes.string.isRequired
+  };
+}
 
 DocumentTitle.prototype.render = function() {
   if (this.props.children) {
