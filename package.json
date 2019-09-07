@@ -39,6 +39,6 @@
   },
   "dependencies": {
     "prop-types": "^15.5.6",
-    "react-side-effect": "^1.0.2"
+    "react-side-effect": "^2.1.0"
   }
 }
