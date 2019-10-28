@@ -9,7 +9,9 @@ var expect = require('expect.js'),
     createReactClass = require('create-react-class'),
     DocumentTitle = require('../');
 
-jsdom();
+jsdom({
+  url: "http://localhost"
+});
 
 describe('DocumentTitle (in a browser)', function () {
   var container;
@@ -57,7 +59,7 @@ describe('DocumentTitle (in a browser)', function () {
       },
       render: function () {
         return React.createElement(DocumentTitle, {title: 'nope'},
-          React.DOM.div(null, React.createElement(Component1))
+          React.createElement('div', null, React.createElement(Component1))
         );
       }
     });
